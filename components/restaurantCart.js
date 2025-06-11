@@ -2,17 +2,19 @@ import { View, Text, TouchableWithoutFeedback,Image } from 'react-native'
 import React from 'react'
 import * as Icon from "react-native-feather";
 import { themeColor } from '../theme';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { router } from 'expo-router';
+
+
 
 export default function RestaurantCart({item}) {
+    const navigation=useNavigation();
+    //const router=useRoute();
+    
  
   return (
    <TouchableWithoutFeedback 
-  style={{
-
-         shadowColor: themeColor.bgcolor(0.2),
-         shadowRadius:7
-
-  }}
+onPress={()=> navigation.navigate('RestaurantScreen',{...item})}
    >
     
     <View className='mr-6 bg-white rounded-3xl shadow-lg mb-5 pt-2'
