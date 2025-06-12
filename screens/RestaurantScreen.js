@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
 import React from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Image } from 'react-native';
@@ -6,6 +6,7 @@ import * as Icon from "react-native-feather";
 import { ArrowLeft } from 'react-native-feather';
 import { themeColor } from '../theme';
 import DishRow from '../components/dishRow';
+import CartIcone from '../components/cartIcone';
 
 export default function Restaurant() {
   const navigation=useNavigation();
@@ -14,6 +15,8 @@ export default function Restaurant() {
   //console.log('restaurants' ,item)
   return (
     <View>
+      <CartIcone/>
+      <StatusBar style='light'/>
       <ScrollView>
         <View className='relative'>
           <Image className='w-full h-72'
