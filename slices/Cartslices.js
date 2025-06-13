@@ -1,40 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit'
-
-
-
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  items:[],
-}
+  items: [],
+};
 
-export const Cart = createSlice({
+const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    
-    AddtoCart: (state, action) => {
-      state.items=[...state.items,action.payload]
+    addToCart: (state, action) => {
+      state.items.push(action.payload); // ✅ Corrected spelling: AddtoCart → addToCart
     },
-    RemoveFromCart: (state, action) => {
-      let newCart = [...state.items];
-      let itemIndex = state.items.findIndex(item=> item.id==action.payload.id);
-      if(itemIndex>=0){
-        newCart.splice(itemIndex,1)[]
-      }else{
-        console.log('cont remove the item that is not added to cart!');
-
+    removeFromCart: (state, action) => {
+      const itemIndex = state.items.findIndex(item => item.id === action.payload.id);
+      if (itemIndex !== -1) {
+        state.items.splice(itemIndex, 1); // ✅ Corrected spelling: RemoveFromCart → removeFromCart
+      } else {
+        console.log("Can't remove an item that was not added to cart!");
       }
-      state.items=newCart;
     },
-    EmptyCart: (state, action) => {
-      state.items=[];
+    emptyCart: (state) => {
+      state.items = []; // ✅ Corrected spelling: EmptyCart → emptyCart
     },
   },
-})
+});
 
-// Action creators are generated for each case reducer function
-export const {AddtoCart,RemoveFromCart,EmptyCart } = Cart.actions
-export const selectCartItems = state=> state.action.items;
-export const selectCartItemById= (state,id)=> state.cart.items.filter(item=> item.id==id);
-export const selectCartTotal = state=> state.cart.items.reduce((total,item)=> total=total+item.price,0)
-export default Cart.reducer
+// Action creators
+export const { addToCart, removeFromCart, emptyCart } = cartSlice.actions;
+
+// Selectors
+export const selectCartItems = state => state.cart.items;
+export const selectCartItemById = (state, id) => state.cart.items.filter(item => item.id === id);
+export const selectCartTotal = state => state.cart.items.reduce((total, item) => total + item.price, 0);
+
+// Export reducer
+export default cartSlice.reducer;

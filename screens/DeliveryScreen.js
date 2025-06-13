@@ -5,10 +5,19 @@ import { featured } from '../constants';
 import { themeColor } from '../theme';
 import * as Icon from "react-native-feather";
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { SetRestaurant } from '../slices/Restaurantslices';
+import { emptyCart } from '../slices/Cartslices';
 
 export default function Delivery() {
-    const restaurants = featured?.restaurants || []; // ✅ Prevents errors if data is missing
+    const restaurants = useSelector(state => state.restaurant.restaurants || []);
+ // ✅ Prevents errors if data is missing
     const navigation=useNavigation();
+    const dispatch = useDispatch();
+    const cancelScreen=()=>{
+      navigation.navigate('HomeScreem');
+     dispatch(emptyCart());
+    }
 
     return (
       <View style={styles.container}>
@@ -47,7 +56,7 @@ export default function Delivery() {
                 <Image className='w-24 h-24 ml-8 ' source={require('../assets/images/delivery-man.png')}/>
             </View>
             <View
-            className='p-2 flex-row justify-between items-center rounded-full my-5 mx-1 px-6 w-full'
+            className='p-2 flex-row justify-between items-center rounded-full my-5 mx-1 px-6 w-full mb-20'
             style={{backgroundColor:themeColor.bgcolor(0.8)}}>
                 <View className='p-1 rounded-full'
                 style={{backgroundColor: `rgba(255,255,255,0.4)`}}
@@ -70,7 +79,7 @@ export default function Delivery() {
 
                     </TouchableOpacity>
                     <TouchableOpacity className='bg-white p-2 rounded-full'
-                    onPress={()=> navigation.navigate('HomeScreem')}
+                    onPress={cancelScreen}
                     >
                         <Icon.X  stroke={'red'} strokeWidth={4}/>
 

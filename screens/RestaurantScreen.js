@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Image } from 'react-native';
 import * as Icon from "react-native-feather";
@@ -7,12 +7,20 @@ import { ArrowLeft } from 'react-native-feather';
 import { themeColor } from '../theme';
 import DishRow from '../components/dishRow';
 import CartIcone from '../components/cartIcone';
+import { useDispatch } from 'react-redux';
+import { SetRestaurant } from '../slices/Restaurantslices';
 
 export default function Restaurant() {
   const navigation=useNavigation();
   const {params}=useRoute();
   let item= params;
+  const dispatch = useDispatch();
   //console.log('restaurants' ,item)
+  useEffect(()=>{
+  if(item && item.id){
+    dispatch(SetRestaurant({...item}))
+  }
+  },[])
   return (
     <View>
       <CartIcone/>
